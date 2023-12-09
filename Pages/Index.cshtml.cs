@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BookReviews.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
@@ -8,28 +10,6 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace BookReviews.Pages
 {
-    public class ApiResponse
-    {
-        public int numFound { get; set; }
-        //public int start { get; set; }
-        //public bool numfoundexact { get; set; }
-        public List<Doc> docs { get; set; }
-    }
-
-    public class Doc
-    {
-        public string key { get; set; }
-        //public string type { get; set; }
-        //public List<string> seed { get; set; }
-        public string title { get; set; }
-        public List<string> author_name { get; set; }
-        public List<string> subject { get; set; }
-        public List<string> isbn { get; set; }
-        public int first_publish_year { get; set; }
-        public List<string> publisher { get; set; }
-        public string imageUrl { get; set; }
-        // Add other properties as needed
-    }
 
     public class IndexModel : PageModel
     {
@@ -56,7 +36,6 @@ namespace BookReviews.Pages
                 FetchedData = JsonSerializer.Deserialize<ApiResponse>(content);
                 if (FetchedData != null && FetchedData.docs != null)
                 {
-                    HttpContext.Session.SetString("Docs", JsonSerializer.Serialize(FetchedData.docs));
                     FetchedData.docs = FetchedData.docs.Take(10).ToList();
                 }
 
@@ -75,6 +54,7 @@ namespace BookReviews.Pages
                     doc.subject = TakeFirstThree(doc.subject);
                     doc.publisher = TakeFirstThree(doc.publisher);
                 }
+                HttpContext.Session.SetString("Docs", JsonSerializer.Serialize(FetchedData.docs));
             }
             else
             {

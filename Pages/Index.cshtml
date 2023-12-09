@@ -20,7 +20,7 @@
                     <div class="book-image">
                         @if (!string.IsNullOrEmpty(book.imageUrl))
                         {
-                            <img src="@book.imageUrl" alt="@book.title" />
+                            <img src="@book.imageUrl" alt="coverImage" />
                         }
 
                     </div>
@@ -52,7 +52,24 @@
 <div id="bookModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <div id="modalBookDetails"></div>
-        <button id="modalButton">Some Action</button>
+
+        <!-- New container for content and button -->
+        <div class="modal-container">
+            <div class="modal-body">
+                <div id="modalImageContainer" class="modal-side">
+                    <img id="bookImage" src="" alt="Book Image" />
+                </div>
+                <div id="modalBookDetails" class="modal-main">
+                    <div id="bookKey" style="display: none;"></div>
+                    <div id="bookTitle"></div>
+                    <div id="bookAuthor"></div>
+                    <div id="bookSubject"></div>
+                    <div id="bookPublishYear"></div>
+                    <div id="bookPublisher"></div>
+                </div>
+            </div>
+
+            <button id="modalButton">Add to library</button>
+        </div>
     </div>
 </div>

@@ -1,3 +1,6 @@
+using BookReviews.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +8,9 @@ builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
 builder.Services.AddSession();
 builder.Services.AddControllers();
+builder.Services.AddDbContext<BookContext>(options => options.UseSqlite(
+    builder.Configuration.GetConnectionString("DefaultConnection")
+    ));
 
 var app = builder.Build();
 
@@ -23,7 +29,7 @@ app.UseRouting();
 app.MapControllerRoute(
     name: "book",
     pattern: "{controller=Books}/{action=GetBookDetails}/{id}"
-    );
+);
 
 //app.MapControllerRoute(
 //    name: "GetBookDetails",

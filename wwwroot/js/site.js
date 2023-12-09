@@ -12,26 +12,33 @@ function openModal(bookKey) {
     xhr.onload = function () {
         if (xhr.status === 200) {
             var book = JSON.parse(xhr.responseText);
-            var modalContent = document.getElementById("modalBookDetails");
-            modalContent.innerHTML = `<h2>${book.title}</h2><p><strong>Author:</strong> ${book.author_name.join(", ")}</p>`; // Adjust according to your book object structure
+            console.log(book);
+            document.getElementById("bookKey").textContent = book.key; 
+            document.getElementById("bookImage").src = book.imageUrl;
+            document.getElementById("bookTitle").innerHTML = `<h2>${book.title}</h2>`;
+            document.getElementById("bookAuthor").innerHTML = `<p><strong>Author: </strong> ${book.author_name ? book.author_name.join(", ") : "None"}</p>`;
+            document.getElementById("bookSubject").innerHTML = `<p><strong>Subjects: </strong>${book.subject ? book.subject.join(", ") : "None"}</p>`;
+            document.getElementById("bookPublishYear").innerHTML = `<p><strong>Published: </strong> ${book.first_publish_year ? book.first_publish_year : "None"}</p>`;
+            document.getElementById("bookPublisher").innerHTML = `<p><strong>Publisher: </strong> ${book.publisher ? book.publisher.join(", ") : "None"}</p>`;
+            /*modalContent.innerHTML = `<h2>${book.title}</h2><p><strong>Author:</strong> ${book.author_name.join(", ")}</p>`; // Adjust according to your book object structure*/
             modal.style.display = "block";
         }
     };
     xhr.send();
 }
 
-//function openModal(bookKey) {
-//    // Make an AJAX call to fetch book details
-//    // For example, using fetch API
-//    fetch('/BooksController/GetBookDetails?key=' + bookKey)
-//        .then(response => response.json())
-//        .then(data => {
-//            // Assuming data has book details
-//            document.getElementById('modalTitle').innerText = data.title;
-//            // Populate other modal elements here
-//            document.getElementById('bookModal').style.display = "block";
-//        });
-//}
+document.getElementById("modalButton").addEventListener("click", function () {
+    var bookKey = document.getElementById("bookKey").textContent;                                                         // get the book key
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/Books/' + encodeURIComponent(bookKey), true);
+    xhr.onload = function () {
+        if (xhr.status === 200) {
+            console.log("hello");
+            // Handle success (change button text, show message, etc.)  IMPLEMENT SOME SUCCESSTHINGY
+        }
+    };
+    xhr.send();
+});
 
 // Close the modal when the user clicks on <span> (x)
 span.onclick = function () {
