@@ -1,0 +1,58 @@
+﻿@page
+@using System.Text.Json;
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <form method="post" id="OpenLibraryCall">
+        <input type="text" name="UserInput" />
+        <input type="submit" />
+    </form>
+
+    @if (Model.FetchedData != null && Model.FetchedData.docs != null)
+    {
+        <div class="book-cards-container">
+            @foreach (var book in Model.FetchedData.docs)
+            {
+                <div class="book-card" onclick="openModal('@book.key')">
+                    <div class="book-image">
+                        @if (!string.IsNullOrEmpty(book.imageUrl))
+                        {
+                            <img src="@book.imageUrl" alt="@book.title" />
+                        }
+
+                    </div>
+                    <div class="book-details">
+                        <p>@book.title</p>
+                        @if (book.author_name != null && book.author_name.Any())
+                        {
+                            <p><strong>Author:</strong> @string.Join(", ", book.author_name)</p>
+                        }
+                        @if (book.first_publish_year != 0)
+                        {
+                            <p><strong>Published:</strong> @book.first_publish_year</p>
+                        }
+                        @if (book.publisher != null && book.publisher.Any())
+                        {
+                            <p><strong>Publisher:</strong> @string.Join(", ", book.publisher)</p>
+                        }
+                        @if (book.subject != null && book.subject.Any())
+                        {
+                            <p><strong>Subjects:</strong> @string.Join(", ", book.subject)</p>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<div id="bookModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="modalBookDetails"></div>
+        <button id="modalButton">Some Action</button>
+    </div>
+</div>
