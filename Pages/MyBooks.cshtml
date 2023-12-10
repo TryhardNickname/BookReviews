@@ -61,12 +61,18 @@
                     <div id="bookSubject"></div>
                     <div id="bookPublishYear"></div>
                     <div id="bookPublisher"></div>
-                    <div id="bookScore"></div>
-                    <div id="bookReview"></div>
+                    <input type="number" id="bookScore" />
+                    <textarea id="bookReview"></textarea>
                 </div>
             </div>
 
-            <button id="modalButtonSave">Save review</button>
+            <div class="modal-button-container">
+                <button id="modalButtonDelete" class="modal-button-delete">Delete Book</button>
+                <button id="modalButtonSave" class="modal-button">Save review</button>
+            </div>
         </div>
     </div>
+    <div id="successMessage" style="display: none; color: green; margin-top: 10px;"></div>
+    <div id="failureMessage" style="display: none; color: red; margin-top: 10px;"></div>
 </div>
+
