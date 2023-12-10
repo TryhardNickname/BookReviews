@@ -8,6 +8,7 @@ Search for books and add them to your library where you can add your review of t
 
 Further improvements: 
 * Make the code tidier, Javascript especially. 
+* Login functionality so that a user has their own library.
 * The API calls can be improved because the api itself supports further tags in the search query such as author, subject and so on. That would make the app prettier if the search result itself contains better info.
 * Perhaps do a lazy load of images to minimize the amount of standard images.
 * Probably a ton more!
