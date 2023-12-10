@@ -1,0 +1,72 @@
+﻿@page
+@model BookReviews.Pages.MyBooksModel
+@{
+    ViewData["Title"] = "My books";
+}
+@{
+    <div class="text-center">
+        @if (Model.Books != null && Model.Books != null)
+        {
+            <div class="book-cards-container">
+                @foreach (var book in Model.Books)
+                {
+                    <div class="book-card" onclick="openModalFromDatabase('@book.Key')">
+                        <div class="book-image">
+                            @if (!string.IsNullOrEmpty(book.ImageUrl))
+                            {
+                                <img src="@book.ImageUrl" alt="coverImage" />
+                            }
+
+                        </div>
+                        <div class="book-details">
+                            <p>@book.Title</p>
+                            @if (book.AuthorName!= null && book.AuthorName.Any())
+                            {
+                                <p><strong>Author:</strong> @string.Join(", ", book.AuthorName.Split(","))</p>
+                            }
+                            @if (book.FirstPublishYear!= 0)
+                            {
+                                <p><strong>Published:</strong> @book.FirstPublishYear</p>
+                            }
+                            @if (book.Publisher!= null && book.Publisher.Any())
+                            {
+                                <p><strong>Publisher:</strong> @string.Join(", ", book.Publisher.Split(","))</p>
+                            }
+                            @if (book.Subject != null && book.Subject.Any())
+                            {
+                                <p><strong>Subjects:</strong>  @string.Join(", ", book.Subject.Split(","))</p>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+}
+
+<div id="bookModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+
+        <!-- New container for content and button -->
+        <div class="modal-container">
+            <div class="modal-body">
+                <div id="modalImageContainer" class="modal-side">
+                    <img id="bookImage" src="" alt="Book Image" />
+                </div>
+                <div id="modalBookDetails" class="modal-main">
+                    <div id="bookKey" style="display: none;"></div>
+                    <div id="bookTitle"></div>
+                    <div id="bookAuthor"></div>
+                    <div id="bookSubject"></div>
+                    <div id="bookPublishYear"></div>
+                    <div id="bookPublisher"></div>
+                    <div id="bookScore"></div>
+                    <div id="bookReview"></div>
+                </div>
+            </div>
+
+            <button id="modalButtonSave">Save review</button>
+        </div>
+    </div>
+</div>

@@ -60,6 +60,10 @@ body {
     margin-top: 10px; /* Adds some space above the button */
 }
 
+#modalButtonSave {
+    align-self: flex-end; /* Aligns button to the right */
+    margin-top: 10px; /* Adds some space above the button */
+}
 /* Your existing styles */
 .modal-content {
     display: flex;

@@ -2,21 +2,11 @@
 //using Microsoft.AspNetCore.Mvc;
 //using System.Text.Json;
 
-//namespace BookReviews.Controllers
-//{
-//    public class BookController : Controller
-//    {
-//        public IActionResult Index()
-//        {
-//            return View();
-//        }
-//    }
-//}
-
 using BookReviews.Data;
 using BookReviews.Models;
 using BookReviews.Pages;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Text.Json;
 
@@ -24,6 +14,13 @@ namespace BookReviews.Controllers
 {
     public class BooksController : ControllerBase
     {
+        private readonly BookContext _context;
+
+        public BooksController(BookContext context)
+        {
+            _context = context;
+        }
+
         [HttpGet]
         [Route("Books/{id?}")]
         public IActionResult GetBookDetails(string id)
@@ -35,6 +32,29 @@ namespace BookReviews.Controllers
                 var docs = JsonSerializer.Deserialize<List<Doc>>(docsJson);
                 var book = docs.FirstOrDefault(doc => doc.key == id);
 
+                if (book != null)
+                {
+                    return new JsonResult(book);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet]
+        [Route("Books/DetailsFromDb/{id?}")]
+        public IActionResult GetBookDetailsFromDb(string id)
+        {
+            if (!string.IsNullOrEmpty(id))
+            {
+                id = WebUtility.UrlDecode(id);
+                var book = _context.Books.FirstOrDefault(b => b.Key == id);
                 if (book != null)
                 {
                     return new JsonResult(book);
@@ -88,7 +108,7 @@ namespace BookReviews.Controllers
                 Isbn = string.Join(",", book.isbn),
                 FirstPublishYear = book.first_publish_year,
                 Publisher = string.Join(",", book.publisher),
-                ImageUrl = book.imageUrl
+                ImageUrl = book.imageUrl,
                 // Assign other properties as needed
             };
 

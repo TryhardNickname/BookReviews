@@ -27,18 +27,53 @@ function openModal(bookKey) {
     xhr.send();
 }
 
-document.getElementById("modalButton").addEventListener("click", function () {
-    var bookKey = document.getElementById("bookKey").textContent;                                                         // get the book key
+function openModalFromDatabase(bookKey) {
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/Books/' + encodeURIComponent(bookKey), true);
+
+    xhr.open('GET', '/Books/DetailsFromDb/' + encodeURIComponent(bookKey), true);
     xhr.onload = function () {
         if (xhr.status === 200) {
-            console.log("hello");
-            // Handle success (change button text, show message, etc.)  IMPLEMENT SOME SUCCESSTHINGY
+            var book = JSON.parse(xhr.responseText);
+            // Update the modal with book details from the database
+            document.getElementById("bookKey").textContent = book.key;
+            document.getElementById("bookImage").src = book.imageUrl;
+            document.getElementById("bookTitle").innerHTML = `<h2>${book.title}</h2>`;
+            document.getElementById("bookAuthor").innerHTML = `<p><strong>Author: </strong> ${book.authorName ? book.authorName.split(',').join(', ') : "None"}</p>`;
+            document.getElementById("bookSubject").innerHTML = `<p><strong>Subjects: </strong>${book.subject ? book.subject.split(',').join(', ') : "None"}</p>`;
+            document.getElementById("bookPublishYear").innerHTML = `<p><strong>Published: </strong> ${book.firstPublishYear ? book.firstPublishYear : "None"}</p>`;
+            document.getElementById("bookPublisher").innerHTML = `<p><strong>Publisher: </strong> ${book.publisher ? book.publisher.split(',').join(', ') : "None"}</p>`;
+
+            // ... update other modal fields ...
+            modal.style.display = "block";
         }
     };
     xhr.send();
-});
+}
+
+var modalButton = document.getElementById("modalButton");
+if (modalButton) {
+    modalButton.addEventListener("click", function () {
+        var bookKey = document.getElementById("bookKey").textContent;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/Books/' + encodeURIComponent(bookKey), true);
+        xhr.onload = function () {
+            if (xhr.status === 200) {
+                console.log("hello");
+                // Handle success (change button text, show message, etc.)
+            }
+        };
+        xhr.send();
+    });
+}
+
+var modalButtonSave = document.getElementById("modalButtonSave");
+if (modalButtonSave) {
+    modalButtonSave.addEventListener("click", function () {
+        console.log("hello");
+    });
+}
+
+
 
 // Close the modal when the user clicks on <span> (x)
 span.onclick = function () {

@@ -35,6 +35,8 @@
         public int FirstPublishYear { get; set; }
         public string Publisher { get; set; }
         public string ImageUrl { get; set; }
+        public string? Review {  get; set; }
+        public int? Score { get; set; }
     }
 
 }
