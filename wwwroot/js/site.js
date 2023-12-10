@@ -1,10 +1,11 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
-// Write your JavaScript code.
 var modal = document.getElementById("bookModal");
 var span = document.getElementsByClassName("close")[0];
 
+// This method is run when you click on a bookcard, it fetches info about the book clicked by using the key and then finding the matching book with that key in the users session.
+// The other solution would be to use the encoded info in the html but seemed like a bad idea.
 function openModal(bookKey) {
     var xhr = new XMLHttpRequest();
 
@@ -27,6 +28,7 @@ function openModal(bookKey) {
     xhr.send();
 }
 
+// Fetch the book from the database and populate the modal with the info.
 function openModalFromDatabase(bookKey) {
     var xhr = new XMLHttpRequest();
 
@@ -34,7 +36,7 @@ function openModalFromDatabase(bookKey) {
     xhr.onload = function () {
         if (xhr.status === 200) {
             var book = JSON.parse(xhr.responseText);
-            // Update the modal with book details from the database
+
             document.getElementById("bookKey").textContent = book.key;
             document.getElementById("bookImage").src = book.imageUrl;
             document.getElementById("bookTitle").innerHTML = `<h2>${book.title}</h2>`;
@@ -45,13 +47,13 @@ function openModalFromDatabase(bookKey) {
             document.getElementById("bookScore").value = book.score;
             document.getElementById("bookReview").value = book.review;
 
-            // ... update other modal fields ...
             modal.style.display = "block";
         }
     };
     xhr.send();
 }
 
+// This button saves the selected book to the database.
 var modalButton = document.getElementById("modalButton");
 if (modalButton) {
     modalButton.addEventListener("click", function () {
@@ -62,20 +64,17 @@ if (modalButton) {
             if (xhr.status === 200) {
                 console.log("hello");
                 var successMessage = document.getElementById("successMessage");
-                successMessage.textContent = "Book updated successfully!";
+                successMessage.textContent = "Book added successfully!";
 
-                // Fade in
                 successMessage.style.display = "block";
                 successMessage.style.animationName = 'fadeIn';
 
-                // Fade out after a delay
                 setTimeout(function () {
                     successMessage.style.animationName = 'fadeOut';
 
-                    // Hide the element after the fade-out animation
                     setTimeout(function () {
                         successMessage.style.display = "none";
-                    }, 1000); // This should match the animation-duration
+                    }, 1000); 
                 }, 1500);
             }
         };
@@ -83,11 +82,12 @@ if (modalButton) {
     });
 }
 
+// This button updates the score and review of the book in the database.
 var modalButtonSave = document.getElementById("modalButtonSave");
 if (modalButtonSave) {
     modalButtonSave.addEventListener("click", function () {
         var bookKey = document.getElementById("bookKey").textContent;
-        var score = document.getElementById("bookScore").value; // Assuming input field for score
+        var score = document.getElementById("bookScore").value; 
         var review = document.getElementById("bookReview").value;
 
         var xhr = new XMLHttpRequest();
@@ -99,36 +99,34 @@ if (modalButtonSave) {
                 var successMessage = document.getElementById("successMessage");
                 successMessage.textContent = "Book updated successfully!";
 
-                // Fade in
                 successMessage.style.display = "block";
                 successMessage.style.animationName = 'fadeIn';
 
-                // Fade out after a delay
                 setTimeout(function () {
                     successMessage.style.animationName = 'fadeOut';
 
-                    // Hide the element after the fade-out animation
+
                     setTimeout(function () {
                         successMessage.style.display = "none";
-                    }, 1000); // This should match the animation-duration
+                    }, 1000); 
                 }, 1500);
             } else {
                 console.log("Update failed");
                 var failureMessage = document.getElementById("failureMessage");
                 failureMessage.textContent = "Book not updated successfully.";
 
-                // Fade in
+
                 failureMessage.style.display = "block";
                 failureMessage.style.animationName = 'fadeIn';
 
-                // Fade out after a delay
+
                 setTimeout(function () {
                     failureMessage.style.animationName = 'fadeOut';
 
-                    // Hide the element after the fade-out animation
+
                     setTimeout(function () {
                         failureMessage.style.display = "none";
-                    }, 1000); // This should match the animation-duration
+                    }, 1000); 
                 }, 1500);
             }
         };
@@ -138,13 +136,14 @@ if (modalButtonSave) {
     });
 }
 
+// This button deletes the selected book from the database.
 var modalButtonDelete = document.getElementById("modalButtonDelete");
 if (modalButtonDelete) {
     modalButtonDelete.addEventListener("click", function () {
-        var bookKey = document.getElementById("bookKey").textContent; // Assuming this is your book identifier
+        var bookKey = document.getElementById("bookKey").textContent;
 
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/Books/DeleteBook', true); // Using POST for the delete operation
+        xhr.open('POST', '/Books/DeleteBook', true); 
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function () {
             if (xhr.status === 200) {
@@ -153,7 +152,6 @@ if (modalButtonDelete) {
                 location.reload()
             } else {
                 console.log("Failed to delete book");
-                // Handle failure - e.g., show error message
             }
         };
 
@@ -162,12 +160,11 @@ if (modalButtonDelete) {
     });
 }
 
-// Close the modal when the user clicks on <span> (x)
+// onclick functions to close the modal when pressed outside on the X-button or outside the modal.
 span.onclick = function () {
     modal.style.display = "none";
 }
 
-// Close the modal when the user clicks anywhere outside of the modal
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";

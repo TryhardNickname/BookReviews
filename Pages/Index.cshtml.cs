@@ -17,6 +17,7 @@ namespace BookReviews.Pages
         private readonly IHttpClientFactory _httpClientFactory;
         [BindProperty]
         public string UserInput { get; set; }
+        //FetchedData is a collection of Docs that are found in the search result.
         public ApiResponse FetchedData { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger, IHttpClientFactory httpClientFactory)
@@ -25,7 +26,12 @@ namespace BookReviews.Pages
             _httpClientFactory = httpClientFactory;
         }
 
+        //When you click the search button in the index page, this method runs. It uses the OpenLibrary API. Results are not pretty sometimes.
+        //Manually limit results to 10 but inefficient because it fetches all the results that are found, and then removes all but 10. 
 
+        //Also fetches the cover image if available for the first ISBN, if not use standard image. Would be possible to loop through all ISBNS
+        //to maybe find an ISBN with an image but that would be a lot of api calls. Also limit subjects and publishers to 3 to make the frontend
+        //look more similar to eachother.
         public async Task<IActionResult> OnPostAsync()
         {
             var client = _httpClientFactory.CreateClient();
@@ -64,13 +70,13 @@ namespace BookReviews.Pages
             return Page();
         }
 
+        //Check if the coverimage exists.
         public async Task<bool> UrlExists(string url)
         {
             try
             {
                 using (var httpClient = new HttpClient())
                 {
-                    // Using HEAD request to get only headers, not the full content
                     var request = new HttpRequestMessage(HttpMethod.Head, url);
                     var response = await httpClient.SendAsync(request);
 
@@ -84,6 +90,7 @@ namespace BookReviews.Pages
             }
         }
 
+        //Limit the whole List to only contain three.
         public List<T> TakeFirstThree<T>(List<T> originalList)
         {
             return originalList?.Take(3).ToList() ?? new List<T>();

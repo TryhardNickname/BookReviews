@@ -4,6 +4,7 @@
     ViewData["Title"] = "My books";
 }
 @{
+    //Same code as index.cshtml. The same book cards and modal.
     <div class="text-center">
         @if (Model.Books != null && Model.Books != null)
         {
@@ -43,12 +44,11 @@
         }
     </div>
 }
-
+@* This modal is slightly different because it has score and review fields, plus a delete button.*@
 <div id="bookModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
 
-        <!-- New container for content and button -->
         <div class="modal-container">
             <div class="modal-body">
                 <div id="modalImageContainer" class="modal-side">
@@ -61,7 +61,9 @@
                     <div id="bookSubject"></div>
                     <div id="bookPublishYear"></div>
                     <div id="bookPublisher"></div>
-                    <input type="number" id="bookScore" />
+                    <span id="bookScoreTag">Rating: </span>
+                    <input type="number" id="bookScore" min="1" max="10" />
+                    <span id="bookReviewTag">Review: </span>
                     <textarea id="bookReview"></textarea>
                 </div>
             </div>
@@ -72,7 +74,7 @@
             </div>
         </div>
     </div>
-    <div id="successMessage" style="display: none; color: green; margin-top: 10px;"></div>
-    <div id="failureMessage" style="display: none; color: red; margin-top: 10px;"></div>
+    <div id="successMessage" style="display: none; "></div>
+    <div id="failureMessage" style="display: none; "></div>
 </div>
 

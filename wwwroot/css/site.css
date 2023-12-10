@@ -21,6 +21,98 @@ body {
   margin-bottom: 60px;
 }
 
+
+.main-content {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+
+.container {
+    max-width: 1140px; 
+}
+
+
+/* Header and navbar styling.*/
+header {
+    background-color: #a9a9a9;
+    color: white;
+}
+
+
+.navbar {
+    padding: 0.5rem 1rem;
+    background-color: #a9a9a9 !important;
+    color: white;
+}
+
+.navbar-brand {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500; 
+}
+
+.nav-item.active .nav-link {
+    color: #fff !important;
+    background-color: #258cfb;
+}
+
+
+.navbar-brand:hover, .navbar-nav .nav-link:hover {
+    color: #ddd !important; 
+}
+
+/* Footer styling */
+footer {
+    background-color: #a9a9a9;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+footer a {
+    color: #ddd; 
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: white; 
+}
+
+/* Trying to make the form at the index page look better */
+.search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.search-input {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 250px;
+}
+
+.search-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #45a049;
+}
+
+/* This is common for the cards that represent a book */
 .book-cards-container {
     display: flex;
     flex-wrap: wrap;
@@ -43,31 +135,39 @@ body {
     margin-top: 10px;
 }
 
+#bookImage {
+    max-width: 100%;
+    height: auto;
+}
+
+
+/* This is for the modal that pops up when you press a book card */
+
 .modal-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Aligns children to start and end of container */
-    height: 100%; /* Takes full height of the modal content */
+    justify-content: space-between; 
+    height: 100%; 
 }
 
 .modal-body {
     display: flex;
-    flex: 1; /* Takes up available space, pushing the button down */
+    flex: 1; 
 }
 
 #modalButton {
-    align-self: flex-end; /* Aligns button to the right */
-    margin-top: 10px; /* Adds some space above the button */
+    align-self: flex-end;
+    margin-top: 10px;
 }
 
 #modalButtonSave {
-    align-self: flex-end; /* Aligns button to the right */
-    margin-top: 10px; /* Adds some space above the button */
+    align-self: flex-end;
+    margin-top: 10px; 
 }
-/* Your existing styles */
+
 .modal-content {
     display: flex;
-    flex-direction: column; /* Changed to column */
+    flex-direction: column;
     background-color: #fefefe;
     margin: 5% auto;
     padding: 20px;
@@ -87,92 +187,86 @@ body {
 
 .modal-button-container {
     display: flex;
-    justify-content: flex-end; /* Align buttons to the right */
-    gap: 10px; /* Spacing between buttons */
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 #bookScore, #bookReview {
-    width: 100%; /* Full width within the container */
-    margin-bottom: 10px; /* Space below each input */
-    padding: 8px; /* Padding inside the input */
-    border: 1px solid #ccc; /* Light border for the input */
-    border-radius: 4px; /* Slightly rounded corners */
+    width: 100%; 
+    margin-bottom: 10px;
+    padding: 8px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
 }
 
 #bookScore {
-    height: 40px; /* Fixed height for the score input */
+    height: 40px; 
 }
 
 #bookReview {
-    height: 100px; /* Height for the textarea */
-    resize: vertical; /* Allow vertical resizing */
+    height: 100px; 
+    resize: vertical;
 }
 
 .modal-button {
-    width: auto; /* Auto width based on content */
-    padding: 10px 20px; /* Padding inside the button */
-    margin-top: 10px; /* Space above the button */
-    background-color: #4CAF50; /* Green background color */
-    color: white; /* White text */
-    border: none; /* No border */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Cursor changes to pointer on hover */
+    width: auto; 
+    padding: 10px 20px; 
+    margin-top: 10px; 
+    background-color: #4CAF50;
+    color: white; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
 }
 
 .modal-button:hover {
-    background-color: #45a049; /* Slightly darker green on hover */
+    background-color: #45a049;
 }
 
 .modal-button-delete {
-    width: auto; /* Auto width based on content */
-    padding: 10px 20px; /* Padding inside the button */
-    margin-top: 10px; /* Space above the button */
-    background-color: lightcoral; /* Green background color */
-    color: white; /* White text */
-    border: none; /* No border */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Cursor changes to pointer on hover */
+    width: auto; 
+    padding: 10px 20px; 
+    margin-top: 10px;
+    background-color: lightcoral; 
+    color: white; 
+    border: none;
+    border-radius: 4px; 
+    cursor: pointer; 
 }
 
 .modal-button-delete:hover {
-    background-color: red; /* Slightly darker green on hover */
+    background-color: red; 
 }
 
-#bookImage {
-    max-width: 100%;
-    height: auto;
-}
+/* The two colored popupstripes that show when you successfully did something or failed. */
 
 #successMessage {
     padding: 10px;
-    width: 80%; /* Adjust the width as needed */
-    max-width: 400px; /* Maximum width */
-    margin: 20px auto; /* Vertically 20px, Horizontally auto */
+    width: 80%;
+    max-width: 400px;
+    margin: 20px auto;
     background-color: lightgreen;
-    color: green;
     border-radius: 5px;
     text-align: center;
-    display: none; /* Initially hidden */
-    opacity: 0; /* Start with the element invisible */
-    animation-duration: 1s; /* Duration of the animation */
-    animation-fill-mode: forwards; /* Keeps the final state after the animation */
-    /* No need for absolute positioning */
+    display: none;
+    opacity: 0;
+    animation-duration: 1s;
+    animation-fill-mode: forwards; 
 }
 
 #failureMessage {
     padding: 10px;
-    width: 80%; /* Adjust the width as needed */
-    max-width: 400px; /* Maximum width */
-    margin: 20px auto; /* Vertically 20px, Horizontally auto */
+    width: 80%; 
+    max-width: 400px;
+    margin: 20px auto; 
     background-color: lightcoral;
-    color: green;
     border-radius: 5px;
     text-align: center;
-    display: none; /* Initially hidden */
-    opacity: 0; /* Start with the element invisible */
-    display: none; /* Start with the element not displayed */
-    animation-duration: 1s; /* Duration of the animation */
-    animation-fill-mode: forwards; /* Keeps the final state after the animation */
+    display: none; 
+    opacity: 0; 
+    display: none; 
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
 }
 
 .close {

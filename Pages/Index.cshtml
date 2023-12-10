@@ -6,13 +6,14 @@
 }
 
 <div class="text-center">
-    <form method="post" id="OpenLibraryCall">
-        <input type="text" name="UserInput" />
-        <input type="submit" />
+    <form method="post" id="OpenLibraryCall" class="search-form">
+        <input type="text" name="UserInput" class="search-input" placeholder="Enter a book title..." />
+        <input type="submit" value="Search" class="search-button" />
     </form>
 
     @if (Model.FetchedData != null && Model.FetchedData.docs != null)
     {
+        //create a card for each of the books fetched inside the backend. Limited to 10.
         <div class="book-cards-container">
             @foreach (var book in Model.FetchedData.docs)
             {
@@ -49,11 +50,11 @@
     }
 </div>
 
+@* The modal that is used both here in the api search and in the other page. *@
 <div id="bookModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
 
-        <!-- New container for content and button -->
         <div class="modal-container">
             <div class="modal-body">
                 <div id="modalImageContainer" class="modal-side">

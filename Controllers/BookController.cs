@@ -14,6 +14,7 @@ namespace BookReviews.Controllers
 {
     public class BooksController : ControllerBase
     {
+        // Two classes to use when decoding the input sent from javascript.
         public class BookUpdateModel
         {
             public string Key { get; set; }
@@ -34,6 +35,7 @@ namespace BookReviews.Controllers
             _context = context;
         }
 
+        // Fetch info from the session and return the matching book by key.
         [HttpGet]
         [Route("Books/{id?}")]
         public IActionResult GetBookDetails(string id)
@@ -60,6 +62,7 @@ namespace BookReviews.Controllers
             }
         }
 
+        // Fetch the info from session and save the doc aka book to library.
         [HttpPost]
         [Route("Books/{id?}")]
         public async Task<IActionResult> AddBookToLibrary(string id)
@@ -87,6 +90,7 @@ namespace BookReviews.Controllers
 
         }
 
+        // Fetch info about a book from the database by key.
         [HttpGet]
         [Route("Books/DetailsFromDb/{id?}")]
         public IActionResult GetBookDetailsFromDb(string id)
@@ -110,7 +114,7 @@ namespace BookReviews.Controllers
             }
         }
 
-
+        //Update a book in DB, the only fields that are changeable are score and review.
         [HttpPost]
         [Route("Books/UpdateBook")]
         public async Task<IActionResult> UpdateBook([FromBody] BookUpdateModel model)
@@ -134,6 +138,7 @@ namespace BookReviews.Controllers
             return NotFound();
         }
 
+        //Delete book from the DB by key.
         [HttpPost]
         [Route("Books/DeleteBook")]
         public async Task<IActionResult> DeleteBook([FromBody] BookKeyModel model)
@@ -154,9 +159,10 @@ namespace BookReviews.Controllers
             return NotFound();
         }
 
+        //Create a Book from a Doc and save to DB.
         private async Task SaveBookToLibrary(Doc book)
         {
-            // Convert Doc to LibraryBook
+            // Convert Doc to Book
             var dbBook = new Book
             {
                 Key = book.key,
@@ -167,10 +173,8 @@ namespace BookReviews.Controllers
                 FirstPublishYear = book.first_publish_year,
                 Publisher = string.Join(",", book.publisher),
                 ImageUrl = book.imageUrl,
-                // Assign other properties as needed
             };
 
-            // Save to database using BookContext
             using (var context = new BookContext())
             {
                 context.Books.Add(dbBook);

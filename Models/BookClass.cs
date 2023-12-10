@@ -1,5 +1,6 @@
 ﻿namespace BookReviews.Models
 {
+    //Used as a container about the various "docs" that are search results from the api.
     public class ApiResponse
     {
         public int numFound { get; set; }
@@ -8,6 +9,7 @@
         public List<Doc> docs { get; set; }
     }
 
+    //A book, properties are lowercase to match the keys in the json as to map it easier.
     public class Doc
     {
         public string key { get; set; }
@@ -22,6 +24,7 @@
         public string imageUrl { get; set; }
     }
 
+    //A book in the format used in the DB.
     public class Book
     {
         public int Id { get; set; }
